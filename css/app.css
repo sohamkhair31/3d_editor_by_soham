@@ -155,3 +155,122 @@ body.mode-2d .mode-3d-only { display: block; } /* 👈 ENABLE 3D BUTTONS IN 2D *
 /* 3D Mode */
 body.mode-3d .mode-3d-only { display: block; }
 body.mode-3d .mode-2d-only { display: none; }
+/* ================= MOBILE TOP TOOLBAR FIX ================= */
+@media (max-width: 768px), (pointer: coarse) {
+
+  /* Top-left toolbar container */
+  #floorplanner-controls {
+    top: 8px;
+    left: 8px;
+    padding: 4px;
+  }
+
+  /* All top buttons */
+  #floorplanner-controls .btn {
+    min-width: 44px;      /* 👈 touch target */
+    min-height: 44px;
+    padding: 10px;
+
+    font-size: 18px;      /* icon size */
+    line-height: 1;
+
+    margin-right: 6px;
+    border-radius: 8px;
+  }
+
+  /* Glyphicons scale */
+  #floorplanner-controls .glyphicon {
+    font-size: 18px;
+  }
+
+  /* Prevent buttons from looking cramped */
+  #floorplanner-controls .btn + .btn {
+    margin-left: 4px;
+  }
+}
+
+/* right panel*/
+/* ================= RIGHT CONTROL PANEL — LARGE & TOUCH FRIENDLY ================= */
+
+/* Base (desktop still fine) */
+.dg,
+.qs_main {
+  font-size: 15px;
+}
+
+/* Rows / labels */
+.dg li,
+.dg .title,
+.qs_main label,
+.qs_main .qs_label {
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 6px 10px;
+}
+
+/* Inputs & sliders */
+.dg input,
+.dg select,
+.dg .c input,
+.dg .slider,
+.qs_main input,
+.qs_main select {
+  font-size: 15px;
+  height: 34px;
+}
+
+/* ================= MOBILE / ANDROID ================= */
+@media (max-width: 768px), (pointer: coarse) {
+
+  /* Overall font */
+  .dg,
+  .qs_main {
+    font-size: 18px;                 /* 👈 BIG TEXT */
+  }
+
+  /* Each row becomes taller */
+  .dg li,
+  .dg .title,
+  .qs_main label,
+  .qs_main .qs_label {
+    font-size: 18px;
+    padding: 12px 14px;              /* 👈 MORE HEIGHT */
+    line-height: 1.6;
+  }
+
+  /* Folder headers */
+  .dg .folder > .title {
+    font-size: 19px;
+    padding: 14px;
+  }
+
+  /* Inputs / selects */
+  .dg input,
+  .dg select,
+  .qs_main input,
+  .qs_main select {
+    font-size: 18px;
+    height: 46px;                    /* 👈 TOUCH TARGET */
+  }
+
+  /* Sliders */
+  .dg .slider {
+    height: 14px;
+  }
+
+  .dg .slider-fg {
+    height: 100%;
+  }
+
+  /* Checkboxes */
+  .dg input[type="checkbox"],
+  .qs_main input[type="checkbox"] {
+    transform: scale(1.6);
+    margin-right: 10px;
+  }
+
+  /* Increase spacing between sections */
+  .dg li:not(.folder) {
+    margin-bottom: 6px;
+  }
+}
