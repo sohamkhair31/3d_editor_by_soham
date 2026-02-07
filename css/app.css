@@ -143,3 +143,15 @@ div {
 {
 	color: #000000;
 }
+/* ================= MODE VISIBILITY ================= */
+
+.mode-2d-only { display: none; }
+.mode-3d-only { display: none; }
+
+/* Default → Floorplanner */
+body.mode-2d .mode-2d-only { display: block; }
+body.mode-2d .mode-3d-only { display: block; } /* 👈 ENABLE 3D BUTTONS IN 2D */
+
+/* 3D Mode */
+body.mode-3d .mode-3d-only { display: block; }
+body.mode-3d .mode-2d-only { display: none; }

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTA-8" 
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Architect3D - Floorplan</title>
 <link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -23,7 +26,7 @@
 
 <body>
 <style>
-	/* ================= BASE ================= */
+/* ================= BASE ================= */
 html, body {
   margin: 0;
   padding: 0;
@@ -37,19 +40,23 @@ html, body {
   top: 64px;
   left: 8px;
 
-  width: 280px;
+  width: 280px;                 /* OPEN WIDTH */
   max-width: 92vw;
-
   height: calc(100dvh - 80px);
 
   z-index: 9999;
-  pointer-events: auto;
+  transition: width 0.25s ease;
+}
+
+/* 🔥 COLLAPSED = PHYSICALLY SHRINK CONTAINER */
+#plx-panel-container.plx-collapsed {
+  width: 56px;                  /* CLOSED WIDTH */
 }
 
 /* ================= PANEL ================= */
 #plx-panel {
-  height: 100%;
   width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -68,7 +75,6 @@ html, body {
   color: #ffffff;
 
   padding: 8px 10px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -96,12 +102,20 @@ html, body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* ================= COLLAPSED STATE ================= */
-#plx-panel.plx-collapsed {
-  height: auto;
+/* ================= COLLAPSED VISUALS ================= */
+
+/* hide body */
+#plx-panel-container.plx-collapsed .plx-body {
+  display: none;
 }
 
-#plx-panel.plx-collapsed .plx-body {
+/* center header content */
+#plx-panel-container.plx-collapsed .plx-header {
+  justify-content: center;
+}
+
+/* hide title */
+#plx-panel-container.plx-collapsed .plx-title {
   display: none;
 }
 
@@ -164,9 +178,13 @@ html, body {
     width: 94vw;
     height: calc(100dvh - 64px);
   }
-}
 
+  #plx-panel-container.plx-collapsed {
+    width: 48px;               /* thinner on mobile */
+  }
+}
 </style>
+
 
 <!-- PLX PANEL CONTAINER -->
 <div id="plx-panel-container">
@@ -259,10 +277,13 @@ html, body {
 					title="Delete Walls">
 					<span class="glyphicon glyphicon-remove"></span>
 				</button>
-				<button id="help2d" class="btn btn-sm btn-default"
-					title="Tips&#10;Shift Key: Snap To Axis and Snap to Grid&#10;ESC: Stop drawing walls&#10;DbL-Click(Corner): Adjust Elevation&#10;Click(Room): Change Name&#10;">
-					<span class="glyphicon glyphicon-info-sign"></span>
-				</button>
+
+        <button id="exportGLTF2D"
+        class="btn btn-sm btn-default"
+        title="Export GLTF (from 2D)">
+  <span class="glyphicon glyphicon-export"></span>
+</button>
+
 			</div>
 			<div class="btn-hint ">Press the "Esc" key to stop drawing
 				walls</div>
@@ -739,17 +760,30 @@ function plxImportJSON(e){
 }
 
 /* ================= TOGGLE (FIXED) ================= */
-const panel = document.getElementById("plx-panel");
+const panelContainer = document.getElementById("plx-panel-container");
 const toggle = document.getElementById("plxToggle");
 
 let open = true;
 
 toggle.onclick = () => {
   open = !open;
-  panel.classList.toggle("plx-collapsed", !open);
+  panelContainer.classList.toggle("plx-collapsed", !open);
   toggle.textContent = open ? "✕" : "☰";
 };
 
+
+</script>
+<script>
+document.getElementById("exportGLTF2D").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const gltfBtn = document.getElementById("saveGLTF");
+  if (gltfBtn) {
+    gltfBtn.click(); // 🔥 reuse existing logic
+  } else {
+    console.warn("saveGLTF button not found");
+  }
+});
 </script>
 
 </body>
