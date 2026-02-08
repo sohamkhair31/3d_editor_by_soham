@@ -271,6 +271,6 @@ body.mode-3d .mode-2d-only { display: none; }
 
   /* Increase spacing between sections */
   .dg li:not(.folder) {
-    margin-bottom: 6px;
+    margin-bottom: 0px;
   }
 }
