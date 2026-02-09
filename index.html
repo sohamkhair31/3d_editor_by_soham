@@ -36,29 +36,30 @@ html, body {
 }
 
 /* ================= GLOBAL OFFSETS ================= */
-/* Height of top floating toolbar (≈ 2 buttons) */
 :root {
-  --toolbar-offset: 96px; /* 2 × ~48px buttons */
+  --toolbar-offset: 96px; /* desktop floating toolbar */
 }
 
 /* ================= PANEL CONTAINER ================= */
 #plx-panel-container {
   position: fixed;
-  top: calc(80px + var(--toolbar-offset)); 
+  top: calc(80px + var(--toolbar-offset));
+  bottom: 8px;
   left: 8px;
 
-  width: 200px;                 /* OPEN WIDTH */
+  width: 200px;
   max-width: 92vw;
-  height: calc(100dvh - (80px + var(--toolbar-offset)));
 
   z-index: 9999;
   transition: width 0.25s ease;
+  transform: none; /* safety vs canvas */
 }
 
-/* 🔥 COLLAPSED = PHYSICALLY SHRINK CONTAINER */
+/* COLLAPSED STATE */
 #plx-panel-container.plx-collapsed {
   width: 56px;
-  height: 50px;                  /* CLOSED HEIGHT */
+  height: 50px;
+  bottom: auto;
 }
 
 /* ================= PANEL ================= */
@@ -111,18 +112,14 @@ html, body {
 }
 
 /* ================= COLLAPSED VISUALS ================= */
-
-/* hide body */
 #plx-panel-container.plx-collapsed .plx-body {
   display: none;
 }
 
-/* center header content */
 #plx-panel-container.plx-collapsed .plx-header {
   justify-content: center;
 }
 
-/* hide title */
 #plx-panel-container.plx-collapsed .plx-title {
   display: none;
 }
@@ -133,11 +130,18 @@ html, body {
   border-bottom: 1px dashed #ddd;
 }
 
-.plx-section h4 {
-  margin: 0 0 6px;
-  font-size: 13px;
+.plx-section:last-child {
+  border-bottom: none;
 }
 
+/* unified heading */
+.plx-section h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= INPUTS ================= */
 .plx-input,
 .plx-select {
   width: 100%;
@@ -148,6 +152,7 @@ html, body {
   border: 1px solid #ccc;
 }
 
+/* ================= BUTTONS (BASE – DO NOT OVERRIDE) ================= */
 .plx-btn {
   width: 100%;
   padding: 7px;
@@ -159,8 +164,13 @@ html, body {
   cursor: pointer;
 }
 
-.plx-btn.gray { background: #6b7280; }
-.plx-btn.danger { background: #dc2626; }
+.plx-btn.gray {
+  background: #6b7280;
+}
+
+.plx-btn.danger {
+  background: #dc2626;
+}
 
 /* ================= ROOM ================= */
 .plx-room {
@@ -178,29 +188,73 @@ html, body {
   margin-bottom: 4px;
 }
 
+/* ================= EXPORT / IMPORT (SCOPED) ================= */
+.plx-section.data-section {
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  padding-top: 12px;
+}
+
+/* only export/import buttons */
+.plx-section.data-section .plx-btn {
+  padding: 10px 14px;
+  margin-top: 8px;
+  border-radius: 8px;
+  background: #2d2d2d;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.15s ease,
+              box-shadow 0 0.15s ease,
+              background 0.15s ease;
+}
+
+.plx-section.data-section .plx-btn:hover {
+  background: #1f1f1f;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
+}
+
+.plx-section.data-section .plx-btn:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* import label button */
+.plx-section.data-section label.plx-btn {
+  display: block;
+  text-align: center;
+}
+
 /* ================= MOBILE ================= */
 @media (max-width: 600px) {
   :root {
-    --toolbar-offset: 88px; /* slightly smaller buttons on mobile */
+    --toolbar-offset: 88px;
   }
 
   #plx-panel-container {
     top: calc(56px + var(--toolbar-offset));
+    bottom: 4px;
     left: 4px;
     width: 30vw;
-    height: calc(100dvh - (56px + var(--toolbar-offset)));
   }
 
   #plx-panel-container.plx-collapsed {
-    width: 48px;               /* thinner on mobile */
+    width: 48px;
+  }
+
+  .plx-section.data-section .plx-btn {
+    font-size: 13px;
+    padding: 9px 12px;
   }
 }
+
+/* ================= LANDSCAPE ================= */
 @media (orientation: landscape) {
   #plx-panel-container {
-    top: 100px;        /* move upwards */
+    top: calc(40px + var(--toolbar-offset));
   }
 }
 </style>
+
 
 
 <!-- PLX PANEL CONTAINER -->
@@ -217,13 +271,22 @@ html, body {
       <!-- FLOOR RATE -->
       <div class="plx-section">
         <h4>Floor Rate</h4>
-        <input id="floorRate" class="plx-input" type="number" placeholder="Cost per unit">
+        <input
+          id="floorRate"
+          class="plx-input"
+          type="number"
+          placeholder="Cost per unit"
+        >
       </div>
 
       <!-- ROOMS -->
       <div class="plx-section">
         <h4>Rooms</h4>
-        <input id="roomName" class="plx-input" placeholder="Room name">
+        <input
+          id="roomName"
+          class="plx-input"
+          placeholder="Room name"
+        >
         <button class="plx-btn" onclick="plxAddRoom()">Add Room</button>
         <div id="rooms"></div>
       </div>
@@ -234,12 +297,29 @@ html, body {
         <div id="totals"></div>
       </div>
 
+      <!-- EXPORT / IMPORT -->
+      <div class="plx-section data-section">
+        <h4>Data</h4>
+
+        <button class="plx-btn" onclick="plxExportData()">
+          Export JSON
+        </button>
+
+        <label class="plx-btn" style="display:inline-block; cursor:pointer;">
+          Import JSON
+          <input
+            type="file"
+            accept="application/json"
+            hidden
+            onchange="plxImportData(event)"
+          >
+        </label>
+      </div>
+
     </div>
   </div>
 
 </div>
-
-
 
 
 
@@ -605,24 +685,53 @@ function calc(){
 }
 
 /* ================= JSON EXPORT / IMPORT ================= */
-function plxExportJSON(){
-  const name = jsonName.value || "floor-data";
-  const blob = new Blob([JSON.stringify(plxData, null, 2)], {type:"application/json"});
+function plxExportData() {
+  const data = {
+    floorRate: document.getElementById("floorRate")?.value || 0,
+    rooms: window.plxRooms || []
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = name + ".json";
+  a.download = "floor-data.json";
   a.click();
+
+  URL.revokeObjectURL(a.href);
 }
 
-function plxImportJSON(e){
+function plxImportData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
   const reader = new FileReader();
-  reader.onload = () => {
-    const data = JSON.parse(reader.result);
-    plxData.rooms = data.rooms || [];
-    renderRooms();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Restore floor rate
+      if (data.floorRate !== undefined) {
+        document.getElementById("floorRate").value = data.floorRate;
+      }
+
+      // Restore rooms
+      if (Array.isArray(data.rooms)) {
+        window.plxRooms = data.rooms;
+        plxRenderRooms?.();
+      }
+
+    } catch (err) {
+      alert("Invalid JSON file");
+    }
   };
-  reader.readAsText(e.target.files[0]);
+
+  reader.readAsText(file);
 }
+
 
 /* ================= TOGGLE ================= */
 const panelContainer = document.getElementById("plx-panel-container");
