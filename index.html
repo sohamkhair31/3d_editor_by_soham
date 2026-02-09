@@ -205,57 +205,39 @@ html, body {
 
 <!-- PLX PANEL CONTAINER -->
 <div id="plx-panel-container">
-  
-<div id="plx-panel">
-  <div class="plx-header">
-    <span class="plx-title">Floor Calculator</span>
-    <button id="plxToggle" class="plx-toggle">✕</button>
+
+  <div id="plx-panel">
+    <div class="plx-header">
+      <span class="plx-title">Floor Calculator</span>
+      <button id="plxToggle" class="plx-toggle">✕</button>
+    </div>
+
+    <div class="plx-body">
+
+      <!-- FLOOR RATE -->
+      <div class="plx-section">
+        <h4>Floor Rate</h4>
+        <input id="floorRate" class="plx-input" type="number" placeholder="Cost per unit">
+      </div>
+
+      <!-- ROOMS -->
+      <div class="plx-section">
+        <h4>Rooms</h4>
+        <input id="roomName" class="plx-input" placeholder="Room name">
+        <button class="plx-btn" onclick="plxAddRoom()">Add Room</button>
+        <div id="rooms"></div>
+      </div>
+
+      <!-- TOTALS -->
+      <div class="plx-section">
+        <h4>Totals</h4>
+        <div id="totals"></div>
+      </div>
+
+    </div>
   </div>
 
-  <div class="plx-body" id="plxBody">
-
-    <!-- FLOOR -->
-    <div class="plx-section">
-      <h4>Floor Base</h4>
-      <select id="unit" class="plx-select">
-        <option value="sqm">Square Meter</option>
-        <option value="sqft">Square Feet</option>
-      </select>
-      <input id="floorSize" class="plx-input" type="number" placeholder="Total floor size">
-      <input id="floorRate" class="plx-input" type="number" placeholder="Cost per unit">
-    </div>
-
-    <!-- ROOMS -->
-    <div class="plx-section">
-      <h4>Rooms</h4>
-      <input id="roomName" class="plx-input" placeholder="Room name">
-      <button class="plx-btn" onclick="plxAddRoom()">Add Room</button>
-      <div id="rooms"></div>
-    </div>
-
-    <!-- TOTALS -->
-    <div class="plx-section">
-      <h4>Totals</h4>
-      <div id="totals" style="font-size:13px"></div>
-    </div>
-
-    <!-- JSON -->
-    <div class="plx-section">
-      <input type="file" class="plx-input" accept=".json" onchange="plxImportJSON(event)">
-      <input id="jsonName" class="plx-input" placeholder="Export file name">
-      <button class="plx-btn gray" onclick="plxExportJSON()">Export JSON</button>
-    </div>
-
-  </div>
 </div>
-
-
-
-</div>
-
-
-
-
 
 
 
@@ -479,206 +461,16 @@ window.addEventListener("message", (e) => {
 /* ================= DATA ================= */
 const plxData = {
   rooms: [],
-  catalog: {
-     "floor_items": {
-      "Chair": 900,
-      "Red Chair": 950,
-      "Blue Chair": 950,
-      "Dresser - Dark Wood": 5500,
-      "Dresser - White": 5200,
-      "Bedside table - Shale": 1800,
-      "Bedside table - White": 1700,
-      "Wardrobe - White": 12000,
-      "Full Bed": 15000,
-      "Bookshelf": 4200,
-      "Sectional - Olive": 28000,
-      "Sofa - Grey": 22000,
-      "Wooden Trunk": 3500,
-      "Floor Lamp": 2200,
-      "Coffee Table - Wood": 3800,
-      "Side Table": 1600,
-      "Dining Table": 14000,
-      "Dining table": 14000,
-      "Simple Cabinet": 4500,
-      "Duck": 300,
-      "Bathtub": 18000,
-      "Bedbunk": 22000,
-      "Beddouble": 17000,
-      "Bedsingle": 9000,
-      "Bench": 2800,
-      "Benchcushion": 3500,
-      "Benchcushionlow": 3200,
-      "Bookcaseopen": 4800,
-      "Bookcaseopenlow": 4200,
-      "Cabinetbed": 16000,
-      "Cabinetbeddrawer": 17500,
-      "Cabinetbeddrawertable": 18500,
-      "Cabinettelevision": 6200,
-      "Cabinettelevisiondoors": 7200,
-      "Chaircushion": 1300,
-      "Chairdesk": 2500,
-      "Chairmoderncushion": 3200,
-      "Chairmodernframecushion": 3600,
-      "Chairrounded": 2100,
-      "Coatrackstanding": 2400,
-      "Desk": 6500,
-      "Kitchenfridge": 18000,
-      "Kitchenfridgebuiltin": 28000,
-      "Kitchenfridgelarge": 26000,
-      "Kitchenfridgesmall": 14000,
-      "Kitchensink": 4500,
-      "Kitchenstove": 16000,
-      "Kitchenstoveelectric": 19000,
-      "Lamproundfloor": 2300,
-      "Lampsquarefloor": 2400,
-      "Loungechair": 7000,
-      "Loungechairrelax": 8500,
-      "Loungedesignchair": 12000,
-      "Loungedesignsofa": 32000,
-      "Loungesofa": 24000,
-      "Loungesofalong": 29000,
-      "Loungesofaottoman": 26000,
-      "Plantsmall1": 400,
-      "Plantsmall2": 450,
-      "Plantsmall3": 500,
-      "Pottedplant": 900,
-      "Rugdoormat": 700,
-      "Rugrectangle": 2200,
-      "Ruground": 2000,
-      "Rugrounded": 2100,
-      "Rugsquare": 1900,
-      "Sidetable": 1600,
-      "Sidetabledrawers": 2800,
-      "Speaker": 3500,
-      "Speakersmall": 1800,
-      "Stairs": 12000,
-      "Stairscorner": 14000,
-      "Stairsopen": 16000,
-      "Stairsopensingle": 10000,
-      "Stoolbar": 1800,
-      "Stoolbarsquare": 2000,
-      "Table": 5000,
-      "Tablecloth": 400,
-      "Tablecoffee": 3600,
-      "Tablecoffeeglass": 5200,
-      "Tablecoffeeglasssquare": 5500,
-      "Tablecoffeesquare": 3800,
-      "Tablecross": 6000,
-      "Tablecrosscloth": 6500,
-      "Tableglass": 7000,
-      "Tableround": 5800,
-      "Toilet": 6000,
-      "Toiletsquare": 7500,
-      "Trashcan": 600,
-      "Washer": 22000,
-      "Washerdryerstacked": 42000
-    },
-
-    "ceiling_items": {
-      "Ceilingfan": 3200,
-      "Chandelier": 8500,
-      "Lampsquareceiling": 2800
-    },
-
-    "wall_items": {
-      "NYC Poster": 600,
-      "Bathroomcabinet": 4800,
-      "Bathroommirror": 2200,
-      "Bear": 900,
-      "Coatrack": 1800,
-      "Computerscreen": 8500,
-      "Deskcorner": 7200,
-      "Dryer": 20000,
-      "Kitchencabinetdrawer": 4200,
-      "Kitchencabinetupper": 5500,
-      "Kitchencabinetuppercorner": 6800,
-      "Kitchencabinetupperdouble": 7500,
-      "Kitchencabinetupperlow": 5200,
-      "Lampwall": 1600,
-      "Paneling": 9500,
-      "Televisionantenna": 1200,
-      "Televisionmodern": 18000,
-      "Televisionvintage": 14000
-    },
-
-    "in_wall_items": {
-      "Window": 4200,
-      "Doorway": 6800,
-      "Doorwayfront": 8500,
-      "Doorwayopen": 7200,
-      "Walldoorway": 7800,
-      "Walldoorwaywide": 9800,
-      "Wallwindow": 4500,
-      "Wallwindowslide": 6200
-    },
-
-    "in_wall_floor_items": {
-      "Closed Door": 5200,
-      "Open Door": 4800
-    },
-
-    "on_floor_items": {
-      "Blue Rug": 2300
-    },
-
-    "wall_floor_items": {
-      "Media Console - White": 9500,
-      "Media Console - Black": 9800,
-      "Simplecabinet": 4200,
-      "Bathroomcabinetdrawer": 5200,
-      "Bathroomsink": 6500,
-      "Bathroomsinksquare": 7200,
-      "Bookcaseclosed": 6800,
-      "Bookcasecloseddoors": 8200,
-      "Bookcaseclosedwide": 9000,
-      "Kitchenbar": 12000,
-      "Kitchenbarend": 6500,
-      "Kitchencabinet": 5800,
-      "Kitchencabinetcornerinner": 7200,
-      "Kitchencabinetcornerround": 7600,
-      "Loungedesignsofacorner": 36000,
-      "Loungesofacorner": 32000,
-      "Shower": 14000,
-      "Showerround": 16000
-    },
-
-    "anywhere_items": {
-      "Books": 300,
-      "Cardboardboxclosed": 200,
-      "Cardboardboxopen": 150,
-      "Computerkeyboard": 800,
-      "Computermouse": 500,
-      "Floorcorner": 1000,
-      "Floorcornerround": 1200,
-      "Floorfull": 2000,
-      "Floorhalf": 1200,
-      "Hoodlarge": 8500,
-      "Hoodmodern": 12000,
-      "Kitchenblender": 3200,
-      "Kitchencoffeemachine": 6800,
-      "Kitchenmicrowave": 7500,
-      "Lamproundtable": 1600,
-      "Lampsquaretable": 1700,
-      "Laptop": 42000,
-      "Pillow": 400,
-      "Pillowblue": 450,
-      "Pillowbluelong": 600,
-      "Pillowlong": 550,
-      "Radio": 1800,
-      "Toaster": 2200,
-      "Wall": 1500,
-      "Wallcorner": 1800,
-      "Wallcornerrond": 1900,
-      "Wallhalf": 1000
-    }
-  }
+  catalog: { "floor_items": { "Chair": 900, "Red Chair": 950, "Blue Chair": 950, "Dresser - Dark Wood": 5500, "Dresser - White": 5200, "Bedside table - Shale": 1800, "Bedside table - White": 1700, "Wardrobe - White": 12000, "Full Bed": 15000, "Bookshelf": 4200, "Sectional - Olive": 28000, "Sofa - Grey": 22000, "Wooden Trunk": 3500, "Floor Lamp": 2200, "Coffee Table - Wood": 3800, "Side Table": 1600, "Dining Table": 14000, "Dining table": 14000, "Simple Cabinet": 4500, "Duck": 300, "Bathtub": 18000, "Bedbunk": 22000, "Beddouble": 17000, "Bedsingle": 9000, "Bench": 2800, "Benchcushion": 3500, "Benchcushionlow": 3200, "Bookcaseopen": 4800, "Bookcaseopenlow": 4200, "Cabinetbed": 16000, "Cabinetbeddrawer": 17500, "Cabinetbeddrawertable": 18500, "Cabinettelevision": 6200, "Cabinettelevisiondoors": 7200, "Chaircushion": 1300, "Chairdesk": 2500, "Chairmoderncushion": 3200, "Chairmodernframecushion": 3600, "Chairrounded": 2100, "Coatrackstanding": 2400, "Desk": 6500, "Kitchenfridge": 18000, "Kitchenfridgebuiltin": 28000, "Kitchenfridgelarge": 26000, "Kitchenfridgesmall": 14000, "Kitchensink": 4500, "Kitchenstove": 16000, "Kitchenstoveelectric": 19000, "Lamproundfloor": 2300, "Lampsquarefloor": 2400, "Loungechair": 7000, "Loungechairrelax": 8500, "Loungedesignchair": 12000, "Loungedesignsofa": 32000, "Loungesofa": 24000, "Loungesofalong": 29000, "Loungesofaottoman": 26000, "Plantsmall1": 400, "Plantsmall2": 450, "Plantsmall3": 500, "Pottedplant": 900, "Rugdoormat": 700, "Rugrectangle": 2200, "Ruground": 2000, "Rugrounded": 2100, "Rugsquare": 1900, "Sidetable": 1600, "Sidetabledrawers": 2800, "Speaker": 3500, "Speakersmall": 1800, "Stairs": 12000, "Stairscorner": 14000, "Stairsopen": 16000, "Stairsopensingle": 10000, "Stoolbar": 1800, "Stoolbarsquare": 2000, "Table": 5000, "Tablecloth": 400, "Tablecoffee": 3600, "Tablecoffeeglass": 5200, "Tablecoffeeglasssquare": 5500, "Tablecoffeesquare": 3800, "Tablecross": 6000, "Tablecrosscloth": 6500, "Tableglass": 7000, "Tableround": 5800, "Toilet": 6000, "Toiletsquare": 7500, "Trashcan": 600, "Washer": 22000, "Washerdryerstacked": 42000 }, "ceiling_items": { "Ceilingfan": 3200, "Chandelier": 8500, "Lampsquareceiling": 2800 }, "wall_items": { "NYC Poster": 600, "Bathroomcabinet": 4800, "Bathroommirror": 2200, "Bear": 900, "Coatrack": 1800, "Computerscreen": 8500, "Deskcorner": 7200, "Dryer": 20000, "Kitchencabinetdrawer": 4200, "Kitchencabinetupper": 5500, "Kitchencabinetuppercorner": 6800, "Kitchencabinetupperdouble": 7500, "Kitchencabinetupperlow": 5200, "Lampwall": 1600, "Paneling": 9500, "Televisionantenna": 1200, "Televisionmodern": 18000, "Televisionvintage": 14000 }, "in_wall_items": { "Window": 4200, "Doorway": 6800, "Doorwayfront": 8500, "Doorwayopen": 7200, "Walldoorway": 7800, "Walldoorwaywide": 9800, "Wallwindow": 4500, "Wallwindowslide": 6200 }, "in_wall_floor_items": { "Closed Door": 5200, "Open Door": 4800 }, "on_floor_items": { "Blue Rug": 2300 }, "wall_floor_items": { "Media Console - White": 9500, "Media Console - Black": 9800, "Simplecabinet": 4200, "Bathroomcabinetdrawer": 5200, "Bathroomsink": 6500, "Bathroomsinksquare": 7200, "Bookcaseclosed": 6800, "Bookcasecloseddoors": 8200, "Bookcaseclosedwide": 9000, "Kitchenbar": 12000, "Kitchenbarend": 6500, "Kitchencabinet": 5800, "Kitchencabinetcornerinner": 7200, "Kitchencabinetcornerround": 7600, "Loungedesignsofacorner": 36000, "Loungesofacorner": 32000, "Shower": 14000, "Showerround": 16000 }, "anywhere_items": { "Books": 300, "Cardboardboxclosed": 200, "Cardboardboxopen": 150, "Computerkeyboard": 800, "Computermouse": 500, "Floorcorner": 1000, "Floorcornerround": 1200, "Floorfull": 2000, "Floorhalf": 1200, "Hoodlarge": 8500, "Hoodmodern": 12000, "Kitchenblender": 3200, "Kitchencoffeemachine": 6800, "Kitchenmicrowave": 7500, "Lamproundtable": 1600, "Lampsquaretable": 1700, "Laptop": 42000, "Pillow": 400, "Pillowblue": 450, "Pillowbluelong": 600, "Pillowlong": 550, "Radio": 1800, "Toaster": 2200, "Wall": 1500, "Wallcorner": 1800, "Wallcornerrond": 1900, "Wallhalf": 1000 } }
 };
 
 /* ================= ROOMS ================= */
 function plxAddRoom(){
-  const name = roomName.value || "Room";
   plxData.rooms.push({
-    name, w1:0, w2:0, h1:0, h2:0, objects:[]
+    name: roomName.value || "Room",
+    w1:0, w2:0,
+    h1:0, h2:0,
+    objects:[]
   });
   renderRooms();
 }
@@ -687,109 +479,163 @@ function renderRooms(){
   rooms.innerHTML = "";
   plxData.rooms.forEach((r,i)=>{
     rooms.innerHTML += `
-    <div class="plx-room">
-      <b>${r.name}</b>
-      <input class="plx-input" placeholder="Width 1" oninput="upd(${i},'w1',this.value)">
-      <input class="plx-input" placeholder="Width 2" oninput="upd(${i},'w2',this.value)">
-      <input class="plx-input" placeholder="Height 1" oninput="upd(${i},'h1',this.value)">
-      <input class="plx-input" placeholder="Height 2" oninput="upd(${i},'h2',this.value)">
+      <div class="plx-room">
+        <b>${r.name}</b>
 
-      <select class="plx-select" onchange="loadItems(${i},this)">
-        ${Object.keys(plxData.catalog).map(c=>`<option>${c}</option>`).join("")}
-      </select>
-      <select class="plx-select" id="item-${i}"></select>
+        <input class="plx-input" placeholder="Width 1"
+          oninput="upd(${i},'w1',this.value)">
+        <input class="plx-input" placeholder="Width 2"
+          oninput="upd(${i},'w2',this.value)">
 
-      <button class="plx-btn gray" onclick="addObj(${i})">Add Object</button>
-      <div id="objs-${i}"></div>
+        <input class="plx-input" placeholder="Height 1"
+          oninput="upd(${i},'h1',this.value)">
+        <input class="plx-input" placeholder="Height 2"
+          oninput="upd(${i},'h2',this.value)">
 
-      <button class="plx-btn danger" onclick="delRoom(${i})">Remove Room</button>
-    </div>`;
+        <select class="plx-select" onchange="loadItems(${i},this)">
+          ${Object.keys(plxData.catalog).map(c=>`<option>${c}</option>`).join("")}
+        </select>
+
+        <select class="plx-select" id="item-${i}"></select>
+        <button class="plx-btn gray" onclick="addObj(${i})">Add Object</button>
+
+        <div id="objs-${i}"></div>
+
+        <div id="roomCost-${i}" class="plx-room-cost" style="font-size:12px;margin-top:6px">
+          <i>Enter all dimensions</i>
+        </div>
+
+        <button class="plx-btn danger" onclick="delRoom(${i})">Remove Room</button>
+      </div>
+    `;
     loadItems(i);
     renderObjs(i);
   });
   calc();
 }
 
-function upd(i,k,v){ plxData.rooms[i][k]=+v||0; calc(); }
-function delRoom(i){ plxData.rooms.splice(i,1); renderRooms(); }
+function upd(i,k,v){
+  plxData.rooms[i][k] = +v || 0;
+  calc();
+}
+
+function delRoom(i){
+  plxData.rooms.splice(i,1);
+  renderRooms();
+}
 
 /* ================= OBJECTS ================= */
 function loadItems(i,sel){
   const cat = sel ? sel.value : Object.keys(plxData.catalog)[0];
   const s = document.getElementById(`item-${i}`);
-  s.innerHTML="";
+  s.innerHTML = "";
   for(const k in plxData.catalog[cat]){
-    s.innerHTML+=`<option value="${plxData.catalog[cat][k]}">${k} (${plxData.catalog[cat][k]})</option>`;
+    s.innerHTML += `<option value="${plxData.catalog[cat][k]}">${k}</option>`;
   }
 }
 
 function addObj(i){
-  const s=document.getElementById(`item-${i}`);
+  const s = document.getElementById(`item-${i}`);
   plxData.rooms[i].objects.push({
-    name:s.options[s.selectedIndex].text,
-    price:+s.value
+    name: s.options[s.selectedIndex].text,
+    price: +s.value
   });
-  renderObjs(i); calc();
+  renderObjs(i);
+  calc();
 }
 
 function renderObjs(i){
-  const c=document.getElementById(`objs-${i}`);
-  c.innerHTML="";
+  const c = document.getElementById(`objs-${i}`);
+  c.innerHTML = "";
   plxData.rooms[i].objects.forEach((o,j)=>{
-    c.innerHTML+=`
+    c.innerHTML += `
       <div class="plx-object">
         ${o.name} = ${o.price}
         <button onclick="plxData.rooms[${i}].objects.splice(${j},1);renderObjs(${i});calc()">✕</button>
-      </div>`;
+      </div>
+    `;
   });
 }
 
-/* ================= CALC ================= */
+/* ================= CALCULATION ================= */
 function calc(){
-  let area=0, objCost=0;
-  plxData.rooms.forEach(r=>{
-    area+=(r.w1+r.w2)*(r.h1+r.h2)/2;
-    objCost+=r.objects.reduce((s,o)=>s+o.price,0);
+  let totalArea = 0;
+  let totalFloorCost = 0;
+  let totalObjectCost = 0;
+
+  const rate = +floorRate.value || 0;
+
+  plxData.rooms.forEach((r,i)=>{
+    let area = 0;
+    let floorCost = 0;
+
+    if(r.w1>0 && r.w2>0 && r.h1>0 && r.h2>0){
+      const avgW = (r.w1 + r.w2) / 2;
+      const avgH = (r.h1 + r.h2) / 2;
+
+      area = avgW * avgH;
+      floorCost = area * rate;
+
+      totalArea += area;
+      totalFloorCost += floorCost;
+    }
+
+    const objCost = r.objects.reduce((s,o)=>s+o.price,0);
+    totalObjectCost += objCost;
+
+    const div = document.getElementById(`roomCost-${i}`);
+    if(div){
+      div.innerHTML = `
+        Avg Width: ${((r.w1+r.w2)/2).toFixed(2)}<br>
+        Avg Height: ${((r.h1+r.h2)/2).toFixed(2)}<br>
+        Area: ${area.toFixed(2)}<br>
+        Floor Cost: ${floorCost.toFixed(2)}<br>
+        Object Cost: ${objCost.toFixed(2)}<br>
+        <b>Room Total: ${(floorCost + objCost).toFixed(2)}</b>
+      `;
+    }
   });
-  const floorCost=(+floorSize.value||0)*(+floorRate.value||0);
-  totals.innerHTML=`
-    Area: ${area.toFixed(2)}<br>
-    Floor Cost: ${floorCost.toFixed(2)}<br>
-    Object Cost: ${objCost.toFixed(2)}<br>
-    <b>Total: ${(floorCost+objCost).toFixed(2)}</b>
+
+  totals.innerHTML = `
+    Total Area: ${totalArea.toFixed(2)}<br>
+    Total Floor Cost: ${totalFloorCost.toFixed(2)}<br>
+    Total Object Cost: ${totalObjectCost.toFixed(2)}<br>
+    <b>Grand Total: ${(totalFloorCost + totalObjectCost).toFixed(2)}</b>
   `;
 }
 
-/* ================= JSON ================= */
+/* ================= JSON EXPORT / IMPORT ================= */
 function plxExportJSON(){
-  const name=jsonName.value||"data";
-  const blob=new Blob([JSON.stringify(plxData,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=name+".json";
+  const name = jsonName.value || "floor-data";
+  const blob = new Blob([JSON.stringify(plxData, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name + ".json";
   a.click();
 }
 
 function plxImportJSON(e){
-  const r=new FileReader();
-  r.onload=()=>{Object.assign(plxData,JSON.parse(r.result));renderRooms();};
-  r.readAsText(e.target.files[0]);
+  const reader = new FileReader();
+  reader.onload = () => {
+    const data = JSON.parse(reader.result);
+    plxData.rooms = data.rooms || [];
+    renderRooms();
+  };
+  reader.readAsText(e.target.files[0]);
 }
 
-/* ================= TOGGLE (FIXED) ================= */
+/* ================= TOGGLE ================= */
 const panelContainer = document.getElementById("plx-panel-container");
 const toggle = document.getElementById("plxToggle");
-
 let open = true;
 
-toggle.onclick = () => {
+toggle.onclick = ()=>{
   open = !open;
   panelContainer.classList.toggle("plx-collapsed", !open);
   toggle.textContent = open ? "✕" : "☰";
 };
-
-
 </script>
+
 <script>
 document.getElementById("exportGLTF2D").addEventListener("click", function (e) {
   e.preventDefault();
