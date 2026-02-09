@@ -35,15 +35,21 @@ html, body {
   background: wheat;
 }
 
+/* ================= GLOBAL OFFSETS ================= */
+/* Height of top floating toolbar (≈ 2 buttons) */
+:root {
+  --toolbar-offset: 96px; /* 2 × ~48px buttons */
+}
+
 /* ================= PANEL CONTAINER ================= */
 #plx-panel-container {
   position: fixed;
-  top: 64px;
+  top: calc(80px + var(--toolbar-offset)); 
   left: 8px;
 
   width: 280px;                 /* OPEN WIDTH */
   max-width: 92vw;
-  height: calc(100dvh - 80px);
+  height: calc(100dvh - (80px + var(--toolbar-offset)));
 
   z-index: 9999;
   transition: width 0.25s ease;
@@ -51,7 +57,8 @@ html, body {
 
 /* 🔥 COLLAPSED = PHYSICALLY SHRINK CONTAINER */
 #plx-panel-container.plx-collapsed {
-  width: 56px;                  /* CLOSED WIDTH */
+  width: 56px;
+  height: 50px;                  /* CLOSED HEIGHT */
 }
 
 /* ================= PANEL ================= */
@@ -173,11 +180,15 @@ html, body {
 
 /* ================= MOBILE ================= */
 @media (max-width: 600px) {
+  :root {
+    --toolbar-offset: 88px; /* slightly smaller buttons on mobile */
+  }
+
   #plx-panel-container {
-    top: 56px;
+    top: calc(56px + var(--toolbar-offset));
     left: 4px;
     width: 94vw;
-    height: calc(100dvh - 64px);
+    height: calc(100dvh - (56px + var(--toolbar-offset)));
   }
 
   #plx-panel-container.plx-collapsed {
